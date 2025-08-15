@@ -1,6 +1,7 @@
 /* src/App.css */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Pattaya&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
 
 body {
   margin: 0;
@@ -33,11 +34,12 @@ body {
 }
 
 .login-title {
+  font-family: 'Pacifico', cursive;
   margin: 0;
-  font-size: 1.75rem;
+  font-size: 3rem;
   font-weight: bold;
   text-align: center;
-  color: #2d2d2d;
+  color: #4011eb;
 
 }
 
@@ -60,7 +62,7 @@ body {
 }
 
 hr {
-  width: 90%;
+  width: 100%;
   border: none;
   height: 1.5px;
   background-color: #e0e0e0;
