@@ -2,6 +2,7 @@ import React, { useState, useCallback, useEffect, useRef } from "react";
 import Message from "./message";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
+import Sidebar from "./layout/sidebar";
 
 
 interface LoginProps {
@@ -275,7 +276,7 @@ const googleLogin = useGoogleLogin({
   return (
     <div>
       <Message visible={msgVisible} title={msgTitle} content={msgContent} />
-
+      <Sidebar />
       <div className="login-container" />
       <form
         className="login-box"
