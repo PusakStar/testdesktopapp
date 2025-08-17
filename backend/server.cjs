@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const prisma = require('../../backend/prisma.cjs');
-const { sendRecoveryCode } = require('../../backend/services/email.cjs'); // adjust path
+const prisma = require('./prisma.cjs');
+const { sendRecoveryCode } = require('./services/email.cjs'); // adjust path
 const argon2 = require('argon2');
 
 const app = express();
