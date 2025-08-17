@@ -15,5 +15,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src"]
+  "include": ["../src", "backend/declaration.d.ts", "backend/prisma.cjs", "tests/backend/services/email.cjsckend/db.cjs"]
 }

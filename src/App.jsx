@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Login from './components/login';
-import Home from './assets/Home';
+import Home from './components/common/Home';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 function App() {
