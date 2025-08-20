@@ -3,7 +3,8 @@ import Message from "./message";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "./layout/sidebar";
-
+import RecoveryForm from "../features/auth/components/RecoveryForm"; // 👈 adjust path if needed
+import AuthCodeInput from "../components/forms/AuthCodeInput"; //
 
 interface LoginProps {
   onSuccess?: (email: string) => void;
@@ -343,38 +344,7 @@ const googleLogin = useGoogleLogin({
                 retry {retryCountdown > 0 ? `(${retryCountdown}s)` : ""}
               </a>
             </div>
-            <div className="authenticationcode-inputs">
-              {authCode.map((val, idx) => (
-                <input
-                  key={idx}
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={1}
-                  value={val}
-                  ref={(el) => {
-                    if (el) inputRefs.current[idx] = el;
-                  }} // we'll add inputRefs below
-                  onChange={(e) => {
-                    const input = e.target.value.replace(/\D/g, "").slice(0, 1); // only digits
-                    const updated = [...authCode];
-                    updated[idx] = input;
-                    setAuthCode(updated);
-
-                    if (input && idx < authCode.length - 1) {
-                      inputRefs.current[idx + 1]?.focus(); // move to next
-                    }
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Backspace") {
-                      if (authCode[idx] === "" && idx > 0) {
-                        inputRefs.current[idx - 1]?.focus(); // go to previous
-                      }
-                    }
-                  }}
-                  style={{ width: "2rem", textAlign: "center" }}
-                />
-              ))}
-            </div>
+            <AuthCodeInput authCode={authCode} setAuthCode={setAuthCode} />
             <button type="submit">Confirm</button>
           </>
         )}

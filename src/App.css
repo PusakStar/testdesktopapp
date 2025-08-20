@@ -128,7 +128,7 @@ hr {
 
 .message{
   position: fixed;
-  bottom: -100px; /* Start off-screen */
+  bottom: -200px; /* Start off-screen */
   right: 30px;
   background-color: rgb(255, 255, 255);
   padding: 10px 20px;
@@ -137,7 +137,7 @@ hr {
   z-index: 1000;
   font-size: small;
   width: 400px;
-  transition: bottom 0.3s ease, box-shadow 0.3s ease;
+  transition: bottom 0.5s ease, box-shadow 0.3s ease;
 }
 
 /* Add a class like .message--visible to slide it up */

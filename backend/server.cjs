@@ -159,13 +159,20 @@ app.post("/api/recover", async (req, res) => {
       });
     }
 
+    // 🚫 Block Google-registered accounts from using password recovery
+    if (user.googleId) {
+      return res.status(400).json({
+        message: "This account was created using Google Sign-In. Please use Google to log in.",
+      });
+    }
+
     const code = generateCode();
 
     // 🌏 Convert to Malaysia time (UTC+8)
     const now = new Date();
-    const offsetMs = 8 * 60 * 60 * 1000; // +8 hours in milliseconds
+    const offsetMs = 8 * 60 * 60 * 1000; // +8 hours
     const malaysiaTime = new Date(now.getTime() + offsetMs);
-    const expiresAt = new Date(malaysiaTime.getTime() + 10 * 60 * 1000); // 10 minutes later
+    const expiresAt = new Date(malaysiaTime.getTime() + 10 * 60 * 1000); // +10 minutes
 
     // Save to DB
     await prisma.recovery_code.create({
@@ -186,6 +193,7 @@ app.post("/api/recover", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
 
 
 app.post("/api/reset-password", async (req, res) => {
