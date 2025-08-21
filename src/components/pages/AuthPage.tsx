@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGoogleLogin } from "@react-oauth/google";
 
-import Message from "./message";
-import Sidebar from "./layout/sidebar";
-import LoginForm from "../features/auth/components/LoginForm";
-import RegisterForm from "../features/auth/components/RegisterForm";
-import RecoveryForm from "../features/auth/components/RecoveryForm";
+import Message from "../common/Message";
+import Sidebar from "../layout/sidebar";
+import LoginForm from "../forms/LoginForm";
+import RegisterForm from "../forms/RegisterForm";
+import RecoveryForm from "../forms/RecoveryForm";
 
-import { AuthFormData } from "../types/AuthFormTypes";
-import useAuth from "../features/auth/hooks/useAuth";
-import useAPI from "../features/auth/hooks/useAPI";
+import { AuthFormData } from "../../types/AuthFormTypes";
+import useAuth from "../hooks/useAuth";
+import useAPI from "../hooks/useAPI";
+import dreamicon from "../../assets/dreamicon.png";
 
 interface AuthPageProps {
   onSuccess?: (email: string) => void;
@@ -98,7 +99,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ onSuccess, initialEmail = "" }) => 
       {/* Left Sidebar */}
       <Sidebar />
 
-      <div className="login-container" />
+      <div className="auth-container" />
 
       {/* Recovery Form */}
       {isRecovery ? (
@@ -112,10 +113,13 @@ const AuthPage: React.FC<AuthPageProps> = ({ onSuccess, initialEmail = "" }) => 
         />
       ) : (
         <form
-          className="login-box"
+          className="auth-box"
           onSubmit={isRegister ? registerHandler : loginHandler}
         >
-          <h2 className="login-title">Dream</h2>
+          <div className="authform-title">
+            <h2 className="title">Dream</h2>
+          </div>
+          
           <hr />
 
           {isRegister ? (

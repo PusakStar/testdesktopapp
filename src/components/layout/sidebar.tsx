@@ -5,18 +5,6 @@ import CustomerSupportIcon from "../../assets/cp.png";
 export default function loginsidebar() {
   return (
     <div className="sidebar">
-        <div className="dream-icon__wrapper">
-            <div className="circle-dreamicon">
-                <img src={dreamicon} alt="dreamicon" />
-            </div>
-            <h2>Dream</h2>
-        </div>
-        <ul className="sidebar-item">
-          <li>
-            <img src={LanguageIcon} alt="LanguageIcon" />
-            <a href="#Language">English (US)</a>
-          </li>
-        </ul>
     </div>
   );
 }

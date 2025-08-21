@@ -66,7 +66,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
       </button>
 
       <div className="forgot-password-contactus">
-        <a href="#">Customer Support</a>
+        <a href="#Settings">Settings</a>
         <a
           href="#recover"
           onClick={(e) => {

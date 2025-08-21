@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import AuthCodeInput from "../../../components/forms/AuthCodeInput";
+import AuthCodeInput from "./AuthCodeInput";
 
 interface RecoveryFormProps {
   formData: any;
@@ -123,7 +123,7 @@ const RecoveryForm: React.FC<RecoveryFormProps> = ({
 
   return (
     <form
-      className="login-box"
+      className="auth-box"
       onSubmit={
         isCodeConfirmed
           ? resetPasswordHandler
@@ -133,9 +133,9 @@ const RecoveryForm: React.FC<RecoveryFormProps> = ({
             }
       }
     >
-      <h2 className="login-title">
-        {isCodeConfirmed ? "Create New Password" : "Recover Account"}
-      </h2>
+      <div className="authform-title">
+        <h2>{isCodeConfirmed ? "Dream" : "Dream"}</h2>
+      </div>
       <hr />
 
       {!isCodeConfirmed ? (
@@ -206,7 +206,7 @@ const RecoveryForm: React.FC<RecoveryFormProps> = ({
               setFormData({ ...formData, confirmNewPassword: e.target.value })
             }
           />
-          <button type="submit">Confirm</button>
+          <button type="submit" style={{ width: "100%" }}>Confirm</button>
         </>
       )}
 

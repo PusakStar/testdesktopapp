@@ -16,7 +16,7 @@ body {
 
 
 
-.login-box {
+.auth-box {
   width: 100%;
   background: #ffffff;
   padding: 3rem;
@@ -28,10 +28,10 @@ body {
   gap: 2rem;
   opacity: 0;
   transform: translateY(40px) scale(0.98);
-  animation: loginbox-fade-in 0.7s cubic-bezier(0.6, 0.2, 0.2, 1.1) forwards;
+  animation: authbox-fade-in 0.7s cubic-bezier(0.6, 0.2, 0.2, 1.1) forwards;
 }
 
-@keyframes loginbox-fade-in {
+@keyframes authbox-fade-in {
   from {
     opacity: 0;
     transform: translateY(40px) scale(0.98);
@@ -42,17 +42,41 @@ body {
   }
 }
 
-.login-title {
+
+.authform-title{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  justify-content: center;
+}
+
+
+.authform-title .circle{
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #623FFF 0%, #3B2699 41.78%);
+}
+
+.authform-title .circle img {
+  width: 100%;
+  height: 100%;
+}
+
+
+.authform-title h2{
   font-family: 'Pacifico', cursive;
   margin: 0;
   font-size: 3rem;
   font-weight: bold;
   text-align: center;
   color: #4011eb;
-
 }
 
-.login-box input {
+
+
+.auth-box input {
   font-family: 'Poppins', sans-serif;
   padding: 0.9rem 1.1rem;
   width: 90%;
@@ -64,7 +88,7 @@ body {
   color: #333;
 }
 
-.login-box input:focus {
+.auth-box input:focus {
   border-color: #3b24ec;
   outline: none;
   background-color: #fff;
@@ -78,7 +102,7 @@ hr {
   margin: auto;
 }
 
-.login-box button {
+.auth-box button {
   width: 100%;
   padding: 0.9rem 1.1rem;
   background-color: #3b24ec;
@@ -91,17 +115,17 @@ hr {
   transition: background-color 0.3s ease;
 }
 
-.login-box button:hover {
+.auth-box button:hover {
   background-color: #2d1bc5;
 }
 
-.login-box span{
+.auth-box span{
   font-size: 0.8rem;
   color: #666;
 }
 
 
-.login-box a {
+.auth-box a {
   color: #3b24ec;
   text-decoration: none;
   font-weight: 500;
@@ -109,7 +133,7 @@ hr {
   overflow: hidden;
 }
 
-.login-box a::before {
+.auth-box a::before {
   content: "";
   position: absolute;
   left: 0;
@@ -120,7 +144,7 @@ hr {
   transition: width 0.3s ease;
 }
 
-.login-box a:hover::before {
+.auth-box a:hover::before {
   width: 100%;
 }
 

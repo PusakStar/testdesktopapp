@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "../AuthPage";
+import Login from "../pages/AuthPage";
 import React, { useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 

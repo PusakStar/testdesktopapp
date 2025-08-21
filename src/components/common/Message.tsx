@@ -1,32 +1,18 @@
-import React from "react";
-
 interface MessageProps {
   visible: boolean;
   title: string;
   content: string;
 }
 
-const Message: React.FC<MessageProps> = ({ visible, title, content }) => {
-  if (!visible) return null;
-
+export default function Message({ visible, title, content }: MessageProps) {
   return (
-    <div
-      style={{
-        position: "fixed",
-        top: "20px",
-        right: "20px",
-        background: "#fff",
-        border: "1px solid #ccc",
-        padding: "12px 16px",
-        borderRadius: "8px",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-        zIndex: 9999,
-      }}
-    >
-      <strong>{title}</strong>
-      <div>{content}</div>
+    <div className={`message ${visible ? "message--visible" : ""}`}>
+      <div className="message-header">
+        <h3>{title}</h3>
+      </div>
+      <div className="message-content">
+        <p>{content}</p>
+      </div>
     </div>
   );
-};
-
-export default Message;
+}
