@@ -16,10 +16,6 @@ export default function loginsidebar() {
             <img src={LanguageIcon} alt="LanguageIcon" />
             <a href="#Language">English (US)</a>
           </li>
-          <li>
-            <img src={CustomerSupportIcon} alt="CustomerSupportIcon" />
-            <a href="#CS">Customer Support</a>
-          </li>
         </ul>
     </div>
   );

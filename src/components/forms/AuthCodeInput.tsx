@@ -1,159 +1,85 @@
-// AuthCodeInput.tsx
 import React, { useRef, useEffect } from "react";
 
-interface AuthCodeInputProps {
-  authCode: string[]; // controlled values from parent
-  setAuthCode: (val: string[]) => void; // setter from parent
-  length?: number; // default 6
-  onComplete?: (code: string) => void; // optional
+export interface AuthCodeInputProps {
+  length?: number;
+  authCode: string[];
+  setAuthCode: React.Dispatch<React.SetStateAction<string[]>>;
+  onComplete?: (code: string) => void; // ✅ Trigger auto-confirm when all digits filled
 }
 
 const AuthCodeInput: React.FC<AuthCodeInputProps> = ({
+  length = 6,
   authCode,
   setAuthCode,
-  length = 6,
   onComplete,
 }) => {
-  const inputRefs = useRef<(HTMLInputElement | null)[]>(
-    Array(length).fill(null)
-  );
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {
-    console.log("🔧 AuthCodeInput mounted");
-    // keep inputRefs array length in sync if length prop changes
-    inputRefs.current = inputRefs.current.slice(0, length);
-  }, [length]);
+    // Auto-focus first input on mount
+    inputRefs.current[0]?.focus();
+  }, []);
 
-  // distribute pasted digits into the authCode array starting at startIdx
-  const distributePaste = (raw: string, startIdx: number) => {
-    const digits = (raw ?? "").replace(/\D/g, "");
-    if (!digits) return;
+  /** ✅ Handles single-digit change */
+  const handleChange = (idx: number, value: string) => {
+    if (!/^\d*$/.test(value)) return; // Only allow numbers
 
     const updated = [...authCode];
-    const maxFill = Math.min(digits.length, length - startIdx);
-
-    for (let i = 0; i < maxFill; i++) {
-      updated[startIdx + i] = digits[i];
-    }
-
-    console.log(
-      "📋 distributePaste ->",
-      digits,
-      "startIdx:",
-      startIdx,
-      "result:",
-      updated.join("")
-    );
+    updated[idx] = value.slice(0, 1);
     setAuthCode(updated);
 
-    // focus next empty or blur last
-    const nextEmpty = updated.findIndex((d) => !d);
-    if (nextEmpty !== -1) {
-      inputRefs.current[nextEmpty]?.focus();
-    } else {
-      inputRefs.current[length - 1]?.blur();
-      if (onComplete && updated.every((c) => c && c.length === 1)) {
-        onComplete(updated.join(""));
-      }
+    // Move to next input if value exists
+    if (value && idx < length - 1) {
+      inputRefs.current[idx + 1]?.focus();
+    }
+
+    // Auto-confirm when all filled
+    if (updated.every((digit) => digit !== "") && onComplete) {
+      onComplete(updated.join(""));
     }
   };
 
-  // input-level paste (works in many browsers)
+  /** ✅ Handles backspace to previous input */
+  const handleKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    idx: number
+  ) => {
+    if (e.key === "Backspace" && !authCode[idx] && idx > 0) {
+      inputRefs.current[idx - 1]?.focus();
+    }
+  };
+
+  /** ✅ Handles pasting full code */
   const handleInputPaste = (
     e: React.ClipboardEvent<HTMLInputElement>,
     idx: number
   ) => {
     e.preventDefault();
-    const pasted = e.clipboardData.getData("text");
-    console.log("onPaste (input) received:", pasted, "at", idx);
-
-    // ✅ FIX: start distributing from the *current index*, not 0
-    distributePaste(pasted, idx);
-  };
-
-  // document-level paste fallback (catches cases where input onPaste doesn't fire)
-  useEffect(() => {
-    const handler = (e: ClipboardEvent) => {
-      const pasted = e.clipboardData?.getData("text") ?? "";
-      if (!pasted) return;
-      console.log("🌍 GLOBAL paste detected:", pasted);
-
-      // Try to derive the index from the event target (better than activeElement for context-menu paste)
-      const findIndexFromTarget = (target: EventTarget | null) => {
-        if (!target || !(target instanceof Element)) return -1;
-        return inputRefs.current.findIndex((el) => {
-          if (!el) return false;
-          return el === target || el.contains(target as Node);
-        });
-      };
-
-      // 1) prefer the actual event target
-      let focusedIdx = findIndexFromTarget(e.target);
-
-      // 2) fall back to document.activeElement if target didn't match
-      if (focusedIdx === -1) {
-        focusedIdx = findIndexFromTarget(document.activeElement);
-      }
-
-      // 3) fallback: first empty or 0
-      const firstEmpty = authCode.findIndex((d) => !d);
-      const startIdx =
-        focusedIdx >= 0 ? focusedIdx : firstEmpty !== -1 ? firstEmpty : 0;
-
-      e.preventDefault();
-      distributePaste(pasted, startIdx);
-    };
-
-    document.addEventListener("paste", handler);
-    return () => document.removeEventListener("paste", handler);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authCode, length]);
-
-  const handleChange = (idx: number, raw: string) => {
-    const digits = raw.replace(/\D/g, "");
-    if (digits.length > 1) {
-      console.log("Detected multi-char in onChange:", digits, "at", idx);
-      distributePaste(digits, idx);
-      return;
-    }
+    const pastedData = e.clipboardData.getData("Text").replace(/\D/g, "");
+    if (!pastedData) return;
 
     const updated = [...authCode];
-    updated[idx] = digits ? digits[0] : "";
+    for (let i = 0; i < length; i++) {
+      updated[i] = pastedData[i] || "";
+    }
+
     setAuthCode(updated);
 
-    if (digits && idx < length - 1) {
-      inputRefs.current[idx + 1]?.focus();
-    }
+    // Focus last filled input
+    const lastFilled = Math.min(pastedData.length - 1, length - 1);
+    inputRefs.current[lastFilled]?.focus();
 
-    if (onComplete && updated.every((c) => c && c.length === 1)) {
-      onComplete(updated.join(""));
-    }
-  };
-
-  const handleKeyDown = (
-    e: React.KeyboardEvent<HTMLInputElement>,
-    idx: number
-  ) => {
-    if (e.key === "Backspace") {
-      if (authCode[idx]) {
-        const updated = [...authCode];
-        updated[idx] = "";
-        setAuthCode(updated);
-      } else if (idx > 0) {
-        inputRefs.current[idx - 1]?.focus();
-        const updated = [...authCode];
-        updated[idx - 1] = "";
-        setAuthCode(updated);
-      }
-    } else if (e.key === "ArrowLeft" && idx > 0) {
-      inputRefs.current[idx - 1]?.focus();
-    } else if (e.key === "ArrowRight" && idx < length - 1) {
-      inputRefs.current[idx + 1]?.focus();
+    // Auto-confirm if pasted full code
+    if (pastedData.length === length && onComplete) {
+      onComplete(pastedData);
     }
   };
 
   return (
-    <div className="authenticationcode-inputs" style={{ display: "flex" }}>
+    <div
+      className="authenticationcode-inputs"
+      style={{ display: "flex", justifyContent: "center" }}
+    >
       {Array.from({ length }).map((_, idx) => (
         <input
           key={idx}
@@ -162,8 +88,8 @@ const AuthCodeInput: React.FC<AuthCodeInputProps> = ({
           autoComplete="one-time-code"
           maxLength={1}
           value={authCode[idx] ?? ""}
-          ref={(el: HTMLInputElement | null) => {
-            inputRefs.current[idx] = el;
+          ref={(el) => {
+            inputRefs.current[idx] = el; // ✅ Fixed: no return value
           }}
           onFocus={(e) => {
             setTimeout(() => e.currentTarget.select(), 0);
@@ -172,7 +98,7 @@ const AuthCodeInput: React.FC<AuthCodeInputProps> = ({
           onInput={(e) =>
             handleChange(idx, (e.target as HTMLInputElement).value)
           }
-          onPaste={(e) => handleInputPaste(e, idx)} // ✅ fixed
+          onPaste={(e) => handleInputPaste(e, idx)}
           onKeyDown={(e) => handleKeyDown(e, idx)}
           aria-label={`Digit ${idx + 1}`}
           style={{
