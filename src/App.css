@@ -697,50 +697,55 @@ section.landing-section {
   }
 }
 
-
-.sidebar{
+/* Sidebar */
+.sidebar {
   position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   top: 0;
-  left: 0;
+  left: -250px; /* hidden off screen */
   width: 250px;
   height: 100%;
   border-right: 2px solid #e0e0e0;
+  background: #fff;
   opacity: 0;
-  transform: translateX(-30px) scale(0.98);
-  animation: sidebar-fade-in 0.6s cubic-bezier(0.6, 0.2, 0.2, 1.1) forwards;
+  transform: translateX(0); /* no need for scale now */
+  transition: left 0.4s ease, opacity 0.4s ease;
+  z-index: 2000;
 }
 
-@keyframes sidebar-fade-in {
-  from {
-    opacity: 0;
-    transform: translateX(-30px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0) scale(1);
-  }
+.sidebar.open {
+  left: 0;
+  opacity: 1;
 }
 
+/* When sidebar is open, push the button */
+.sidebar.open ~ .toggle-btn {
+  left: 250px; /* same as sidebar width */
+}
 
-.dream-icon__wrapper{
+.dream-icon__wrapper {
   margin: 20px 10px;
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-.dream-icon__wrapper h2{
+.dream-icon__wrapper h2 {
   font-family: 'Pacifico', cursive;
   color: #4011eb;
   font-size: 2rem;
 }
 
-.circle-dreamicon{
+.circle-dreamicon {
   width: 70px;
   height: 70px;
   border-radius: 50%;
   background: linear-gradient(180deg, #623FFF 0%, #3B2699 41.78%);
-  box-shadow: rgba(113, 113, 113, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
+  box-shadow: rgba(113, 113, 113, 0.2) 0px 12px 28px 0px,
+              rgba(0, 0, 0, 0.1) 0px 2px 4px 0px,
+              rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
 }
 
 .circle-dreamicon img {
@@ -786,6 +791,33 @@ section.landing-section {
   color: #3b24ec;
 }
 
+.sidebar-header {
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  align-self: flex-end;
+  margin: 15px 5px;
+}
 
+.close-btn {
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-color: rgba(3, 0, 0, 0);
+  border-radius: 100px;
+  outline: none;
+  border: none;
+}
 
+.close-btn:hover {
+  background-color: rgba(224, 63, 63, 0.1);
+ 
+}
+
+.close-btn img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
 

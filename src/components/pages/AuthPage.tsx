@@ -37,7 +37,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ onSuccess, initialEmail = "" }) => 
     showMessage,
     clearForm,
   } = useAuth(initialEmail);
-
+  
+  const [open, setOpen] = useState(false);
   const { loginAPI, registerAPI, registerGoogleAPI } = useAPI(showMessage);
 
   // Login handler
@@ -97,7 +98,7 @@ const AuthPage: React.FC<AuthPageProps> = ({ onSuccess, initialEmail = "" }) => 
       <Message visible={msgVisible} title={msgTitle} content={msgContent} />
 
       {/* Left Sidebar */}
-      <Sidebar />
+      <Sidebar open={open} setOpen={setOpen}/>
 
       <div className="auth-container" />
 
@@ -140,6 +141,8 @@ const AuthPage: React.FC<AuthPageProps> = ({ onSuccess, initialEmail = "" }) => 
               setIsRecovery={setIsRecovery}
               setIsRegister={setIsRegister}
               clearForm={clearForm}
+              open={open}              // 👈 add this
+              setOpen={setOpen} 
             />
           )}
         </form>

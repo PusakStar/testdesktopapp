@@ -19,6 +19,10 @@ interface LoginFormProps {
   setIsRecovery: React.Dispatch<React.SetStateAction<boolean>>;
   setIsRegister: React.Dispatch<React.SetStateAction<boolean>>;
   clearForm: () => void;
+
+  /** 👇 NEW */
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({
@@ -29,6 +33,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
   setIsRecovery,
   setIsRegister,
   clearForm,
+  open,        // 👈 add this
+  setOpen,
 }) => {
   return (
     <>
@@ -66,7 +72,17 @@ const LoginForm: React.FC<LoginFormProps> = ({
       </button>
 
       <div className="forgot-password-contactus">
-        <a href="#Settings">Settings</a>
+        <a
+          href="#Settings"
+          onClick={(e) => {
+            e.preventDefault();
+            setOpen(!open); // ✅ now works
+          }}
+          className="toggle-btn"
+        >
+          Settings
+        </a>
+
         <a
           href="#recover"
           onClick={(e) => {
