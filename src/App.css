@@ -797,21 +797,27 @@ section.landing-section {
   justify-content: flex-end;
   align-items: flex-end;
   align-self: flex-end;
-  margin: 15px 5px;
+  margin: 15px 10px;
 }
 
 .close-btn {
   display: flex;
+  justify-content: center;
   align-items: center;
-  position: relative;
   background-color: rgba(3, 0, 0, 0);
-  border-radius: 100px;
+  border-radius: 50%;
   outline: none;
   border: none;
+  padding: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.close-btn:focus {
+  outline: none;
 }
 
 .close-btn:hover {
-  background-color: rgba(224, 63, 63, 0.1);
+  background-color: #f3f2fd;
  
 }
 
