@@ -150,7 +150,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\zafre\\Desktop\\Tauri-projects\\testdesktopapp\\backend\\src\\generated\\prisma",
+      "value": "C:\\Users\\Lenovo\\Desktop\\homework\\React\\testdesktopapp\\backend\\src\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -164,20 +164,21 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\zafre\\Desktop\\Tauri-projects\\testdesktopapp\\backend\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Lenovo\\Desktop\\homework\\React\\testdesktopapp\\backend\\src\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": "../../../../.env",
+    "schemaEnvPath": "../../../../.env"
   },
-  "relativePath": "../../../prisma",
+  "relativePath": "../../prisma",
   "clientVersion": "6.10.1",
   "engineVersion": "9b628578b3b7cae625e8c927178f15a170e74a9c",
   "datasourceNames": [
     "db"
   ],
   "activeProvider": "mysql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -186,8 +187,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel users {\n  id            Int     @id @default(autoincrement())\n  email         String  @unique(map: \"email\") @db.VarChar(255)\n  password      String? @db.VarChar(255) // Now optional (for Google users)\n  name          String? @db.VarChar(255) // Optional Google user name\n  googleId      String? @unique // Google account ID (optional)\n  registeredVia String? @default(\"local\") // e.g., \"local\" or \"google\"\n}\n\nmodel recovery_code {\n  id        Int      @id @default(autoincrement())\n  email     String   @db.VarChar(255)\n  code      String   @db.Char(6)\n  createdAt DateTime @default(now())\n  expiresAt DateTime\n  used      Boolean  @default(false) // \n\n  @@index([email])\n}\n",
-  "inlineSchemaHash": "a0c9a3a648e58c898b9d0aedfa8bca9b19f9ef3b6bb4f2a9f8d23850e925735a",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"mysql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel users {\n  id            Int     @id @default(autoincrement())\n  email         String  @unique(map: \"email\") @db.VarChar(255)\n  password      String? @db.VarChar(255) // Now optional (for Google users)\n  name          String? @db.VarChar(255) // Optional Google user name\n  googleId      String? @unique // Google account ID (optional)\n  registeredVia String? @default(\"local\") // e.g., \"local\" or \"google\"\n}\n\nmodel recovery_code {\n  id        Int      @id @default(autoincrement())\n  email     String   @db.VarChar(255)\n  code      String   @db.Char(6)\n  createdAt DateTime @default(now())\n  expiresAt DateTime\n  used      Boolean  @default(false) // \n\n  @@index([email])\n}\n",
+  "inlineSchemaHash": "440e0d8ff8aba1f1a581b6d57e4fdb8666e4f099f87f6a3af156d8017374e056",
   "copyEngine": true
 }
 
@@ -196,8 +197,8 @@ const fs = require('fs')
 config.dirname = __dirname
 if (!fs.existsSync(path.join(__dirname, 'schema.prisma'))) {
   const alternativePaths = [
+    "backend/src/generated/prisma",
     "src/generated/prisma",
-    "generated/prisma",
   ]
   
   const alternativePath = alternativePaths.find((altPath) => {
@@ -227,7 +228,7 @@ Object.assign(exports, Prisma)
 
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
-path.join(process.cwd(), "src/generated/prisma/query_engine-windows.dll.node")
+path.join(process.cwd(), "backend/src/generated/prisma/query_engine-windows.dll.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
-path.join(process.cwd(), "src/generated/prisma/schema.prisma")
+path.join(process.cwd(), "backend/src/generated/prisma/schema.prisma")
