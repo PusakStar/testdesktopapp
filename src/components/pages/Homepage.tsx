@@ -1,8 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "../pages/AuthPage";
+import Login from "./AuthPage";
 import React, { useState, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import Header from "./Homepage_header";
+import Header from "../common/Homepage_Header";
+import Home_Content from "../layout/Home_Content";
 
 
 
@@ -59,15 +60,16 @@ function FeatureCard({ icon, title, desc }: FeatureCardProps) {
 }
 
 
-function Home() {
+function Homepage() {
       const location = useLocation();
       const fullEmail = location.state?.email || "Guest";
       const username = fullEmail.split("@")[0];
   return (
     <div>
        <Header/>
+       <Home_Content/>
     </div>
   );
 }
 
-export default Home;
+export default Homepage;
