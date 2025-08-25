@@ -11,6 +11,7 @@ body {
   color: #333;
   display: flex;
   justify-content: center;
+  overflow-x: hidden;
 }
 
 
@@ -288,6 +289,7 @@ hr {
 
 /* Remove number input spinner for Firefox */
 .authenticationcode-inputs input[type="number"] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 
@@ -296,19 +298,18 @@ hr {
 
 
 /*Homepage*/
-
-
-
 header {
   margin: 50px 0px;
-  padding: 20px 30px;
+  padding: 0px 30px;
   background-color: rgb(233, 233, 233, 0.8);
   width: 80%;
   position: fixed;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  border-radius: 50px;
+  border-radius: 100px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
 }
 
 .header__wrapper {
@@ -320,7 +321,7 @@ header {
 .header_title {
   font-family: 'Pacifico', cursive;
   font-size: 1.5rem;
-  color: #623FFF;
+  color: #5035c9;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -329,9 +330,9 @@ header {
 .header_title img {
   background: linear-gradient(180deg, #623FFF 0%, #3B2699 41.78%);
   border-radius: 100%;
-  width: 80px;
-  height: 80px;
-  padding: 5px;
+  width: 50px;
+  height: 50px;
+  padding: 4px;
 }
 
 .header_nav {
@@ -346,18 +347,19 @@ header {
 }
 
 .header_nav_items a {
-  color: #340052;
+  color: #3B2699;
 }
 
 .header_profile button {
-  border-radius: 50px;
-  background-color: #2d1bc5;
-  padding: 21px 22px;
+  border-radius: 100px;
+  background-color: #5035c9;
+  padding: 15px 18px;
 }
 
 .header_profile button:hover {
-  background-color: #3b24ec;
+  background-color: #623FFF;
 }
+
 
 /* Sidebar */
 .sidebar {
